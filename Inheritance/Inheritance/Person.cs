@@ -13,7 +13,7 @@ namespace Inheritance
             this.Name = name;
             this.Age = age;
         }
-        public virtual string Name
+        public string Name
         {
             get { return this.name; }
             set
