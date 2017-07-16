@@ -13,16 +13,14 @@ namespace Mankind
             this.FacultyNumber = facultyNumber;
         }
 
-        public override string FirstName
+        /*public override string FirstName
         {
             get { return base.FirstName; }
             set
-            {
-                if (value.Length < 4)
-                    throw new ArgumentException("Expected length at least 4 symbols! Argument: firstName");
+            {                
                 base.FirstName = value;
             }
-        }
+        }//*/
         public string FacultyNumber
         {
             get { return this.facultyNumber; }

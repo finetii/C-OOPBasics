@@ -15,16 +15,14 @@ namespace Mankind
             this.WeekSalary = weekSalary;
             this.WorkHoursPerDay = workHoursPerDay;
         }
-        public override string LastName
+        /*public override string LastName
         {
             get { return base.LastName; }
             set
-            {
-                if (value.Length < 3)
-                    throw new ArgumentException("Expected length at least 3 symbols! Argument: lastName");
+            {                
                 base.LastName = value;
             }
-        }
+        }//*/
         public decimal WeekSalary
         {
             get { return this.weekSalary; }
@@ -47,7 +45,7 @@ namespace Mankind
         }
         private decimal SalaryPerHour()
         {
-            return this.WeekSalary / (this.WorkHoursPerDay * 5);
+            return this.WeekSalary / 5 / this.WorkHoursPerDay;
         }
         public override string ToString()
         {

@@ -19,7 +19,9 @@ namespace Mankind
             catch(ArgumentException ae)
             {
                 Console.WriteLine(ae.Message);
+                Console.ReadLine();
             }
+            Console.ReadLine();
         }
     }
 }
