@@ -1,35 +1,66 @@
-﻿
+﻿using System;
 
-namespace ConsoleApplication1
+namespace Vehicles
 {
-    public abstract class Vehicle
+    abstract class Vehicle
     {
-        double fuelQuantity;
+        double fuelQty;
         double fuelConsumption;
-        
+        double tankCapacity;
+
+        public double FuelQty
+        {
+            get { return fuelQty; }
+            set
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentException("Fuel must be a positive number");
+                }
+                fuelQty = value;
+            }
+        }
+
         public double FuelConsumption
         {
-            get { return this.fuelConsumption; }
-            set { this.fuelConsumption = value; }
+            get { return fuelConsumption; }
+            set { fuelConsumption = value; }
         }
-        
-        public double FuelQuantity
+
+        public double TankCapacity
         {
-            get { return this.fuelQuantity; }
-            set { this.fuelQuantity = value; }
+            get { return tankCapacity; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("Fuel must be a positive number");
+                }
+                tankCapacity = value; }
         }
 
 
-        public Vehicle(double fuelQuantity, double fuelConsumption)
+        public Vehicle(double fuelQty, double fuelConsumption, double tankCapacity)
         {
-            this.FuelQuantity = fuelQuantity;
+            this.FuelQty = fuelQty;
             this.FuelConsumption = fuelConsumption;
+            this.TankCapacity = tankCapacity;
         }
 
         public abstract void Drive(double distance);
-        public virtual void Refuel(double fuel)
+
+        public virtual void Refuel(double liters)
         {
-            this.fuelQuantity += fuel;
+            if (liters > this.TankCapacity)
+            {
+                throw new ArgumentException("Cannot fit fuel in tank");
+            }
+            else if (liters <= 0)
+            {
+                throw new ArgumentException("Fuel must be a positive number");
+            }
+            else
+                this.FuelQty += liters;
         }
     }
 }

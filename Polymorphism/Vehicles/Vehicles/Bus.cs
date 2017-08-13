@@ -1,13 +1,13 @@
 ﻿using System;
 
+
 namespace Vehicles
 {
-    class Car : Vehicle
+    class Bus : Vehicle
     {
-        public Car(double fuelQty, double fuelConsumption, double tankCapacity)
+        public Bus(double fuelQty, double fuelConsumption, double tankCapacity)
             : base (fuelQty, fuelConsumption, tankCapacity)
         {
-            this.FuelConsumption += 0.9;
         }
 
         public override void Drive(double distance)
@@ -17,7 +17,9 @@ namespace Vehicles
                 this.FuelQty -= distance * this.FuelConsumption;
             }
             else
-                throw new ArgumentException("Car needs refueling");
+            {
+                throw new ArgumentException("Bus needs refueling");
+            }
         }
     }
 }
