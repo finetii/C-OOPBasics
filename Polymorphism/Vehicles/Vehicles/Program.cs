@@ -4,128 +4,139 @@ namespace Vehicles
 {
     class Program
     {
-        static void Main(string[] args)
+        private static string Drive(string command, double distance, Car car, Bus bus, Truck truck)
         {
-            Tuple<double,double,double> InputData()
+            switch (command)
             {
-                string[] vehicleInfo = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                double.TryParse(vehicleInfo[1], out double fuelQty);
-                double.TryParse(vehicleInfo[2], out double fuelConsumption);
-                double.TryParse(vehicleInfo[3], out double tankCapacity);
-                var tuple = new Tuple<double, double, double>(fuelQty, fuelConsumption, tankCapacity);
-                return tuple;
+                case "Car": return car.Drive(distance);
+                case "Truck": return truck.Drive(distance); 
+                case "Bus": return bus.Drive(distance); 
+
+                default: return "Unknown vehicle"; 
             }
-            var vehicleData1 = InputData();
-            Vehicle car = new Car(vehicleData1.Item1, vehicleData1.Item2, vehicleData1.Item3);
-            var vehicleData2 = InputData();
-            Vehicle truck = new Truck(vehicleData2.Item1, vehicleData2.Item2, vehicleData2.Item3);
-            var vehicleData3 = InputData();
-            Vehicle bus = new Bus(vehicleData3.Item1, vehicleData3.Item2, vehicleData3.Item3);
-            
+        }
 
-            int.TryParse(Console.ReadLine(), out int numberOfEntries);
+        private static void ParseCommand(string[] command, Car car, Bus bus, Truck truck)
+        {
+            string res = "Unknown command";
 
-            for (int i = 0; i < numberOfEntries; i++)
+            switch (command[0])
             {
-                string[] command = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);                
-                
-                switch (command[0])
-                {
-                    case "Drive":
+                case "Drive":
+                    {
                         double.TryParse(command[2], out double distance);
-                        if (command[1] == "Car")
-                        {
-                            try
-                            {
-                                car.Drive(distance);
-                                Console.WriteLine($"Car travelled {distance} km");
-                            }
-                            catch (ArgumentException ae)
-                            {
-                                Console.WriteLine(ae.Message);
-                            }
-                        }
-                        else if (command[1] == "Truck")
-                        {
-                            try
-                            {
-                                truck.Drive(distance);
-                                Console.WriteLine($"Truck travelled {distance} km");
-                            }
-                            catch (ArgumentException ae)
-                            {
-                                Console.WriteLine(ae.Message);
-                            }
-                        }
-                        else
-                        {
-                            try
-                            {
-                                bus.FuelConsumption += 1.4;
-                                bus.Drive(distance);
-                                Console.WriteLine($"Bus travelled {distance} km");
-                            }
-                            catch (ArgumentException ae)
-                            {
-                                Console.WriteLine(ae.Message);
-                            }
-                        }
-                        break;
+                        res = Drive(command[1], distance, car, bus, truck);
+                        Console.WriteLine(res);
+                    }
+                    break;
 
-                    case "DriveEmpty":
-                        double.TryParse(command[2], out double busDistance);
-                        try
+                case "DriveEmpty":
+                    {
+                        double.TryParse(command[2], out double distance);
+                        switch (command[1])
                         {
-                            bus.Drive(busDistance);
-                            Console.WriteLine($"Bus travelled {busDistance} km");
+                            case "Bus": res = bus.DriveEmpty(distance); break;
+                            default: res = "Only bus can be drivven empty."; break;
                         }
-                        catch (ArgumentException ae)
-                        {
-                            Console.WriteLine(ae.Message);
-                        }
-                        break;
+                        Console.WriteLine(res);
+                    }
+                    break;
 
-                    case "Refuel":
+                case "Refuel":
+                    {
                         double.TryParse(command[2], out double liters);
-                        if (command[1] == "Car")
+                        switch (command[1])
                         {
-                            try
-                            {
-                                car.Refuel(liters);
-                            }
-                            catch (ArgumentException ae)
-                            {
-                                Console.WriteLine(ae.Message);
-                            }
+                            case "Car": res = car.Refuel(liters); break;
+                            case "Truck": res = truck.Refuel(liters); break;
+                            case "Bus": res = bus.Refuel(liters); break;
+                            default: res = "Unknown vehicle"; break;
                         }
-                        else if(command[1] == "Truck")
-                        {
-                            try
+                        if (res != "")
+                            Console.WriteLine(res);
+                    }
+                    break;
+                default: res = "unknown command"; break;
+            }
+        }
+
+        private static void initObjects(Car car, Bus bus, Truck truck)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                try
+                {
+                    string[] input = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    double fuelQty = 0;
+                    double fuelConsumption = 0;
+                    double tankCapacity = 0;
+                    double.TryParse(input[1], out fuelQty);
+                    double.TryParse(input[2], out fuelConsumption);
+                    double.TryParse(input[3], out tankCapacity);
+
+                    switch (input[0])
+                    {
+                        case "Car":
                             {
-                                truck.Refuel(liters);
+                                if (car == null)
+                                    car = new Car(fuelQty, fuelConsumption, tankCapacity);
+                                else
+                                    throw new Exception("Car is allready initialised!");
                             }
-                            catch(ArgumentException ae)
+                            break;
+                        case "Truck":
                             {
-                                Console.WriteLine(ae.Message);
+                                if (truck == null)
+                                    truck = new Truck(fuelQty, fuelConsumption, tankCapacity);
+                                else
+                                    throw new Exception("Truck is allready initialised!");
                             }
-                        }
-                        else
-                        {
-                            try
+                            break;
+
+                        case "Bus":
                             {
-                                bus.Refuel(liters);
+                                if (bus == null)
+                                    bus = new Bus(fuelQty, fuelConsumption, tankCapacity);
+                                else
+                                    throw new Exception("Bus is allready initialised!");
                             }
-                            catch(ArgumentException ae)
-                            {
-                                Console.WriteLine(ae.Message);
-                            }
-                        }
-                        break;                 
+                            break;
+                        default: throw new Exception("Wrong input format");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error: " + e.Message);
                 }
             }
-            Console.WriteLine($"Car: {car.FuelQty:f2}");
-            Console.WriteLine($"Truck: {truck.FuelQty:f2}");
-            Console.WriteLine($"Bus: {bus.FuelQty:f2}");
+        }
+
+        static void Main(string[] args)
+        {
+            Car car = null;
+            Truck truck = null;
+            Bus bus = null;
+
+            initObjects(car, bus, truck);
+
+            try
+            {
+                int.TryParse(Console.ReadLine(), out int numberOfEntries);
+
+                for (int i = 0; i < numberOfEntries; i++)
+                {
+                    string[] command = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    ParseCommand(command, car, bus, truck);
+                }
+                Console.WriteLine($"Car: {car.FuelQty:f2}");
+                Console.WriteLine($"Truck: {truck.FuelQty:f2}");
+                Console.WriteLine($"Bus: {bus.FuelQty:f2}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
         }
     }
 }

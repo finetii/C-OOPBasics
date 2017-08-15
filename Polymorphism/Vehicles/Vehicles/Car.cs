@@ -10,14 +10,15 @@ namespace Vehicles
             this.FuelConsumption += 0.9;
         }
 
-        public override void Drive(double distance)
+        public override string Drive(double distance)
         {
             if ((distance * this.FuelConsumption) <= this.FuelQty)
             {
                 this.FuelQty -= distance * this.FuelConsumption;
+                return $"Car travelled {distance} km";
             }
             else
-                throw new ArgumentException("Car needs refueling");
+                return "Car needs refueling";
         }
     }
 }

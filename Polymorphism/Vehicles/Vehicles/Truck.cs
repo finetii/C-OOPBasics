@@ -10,26 +10,32 @@ namespace Vehicles
             this.FuelConsumption += 1.6;
         }
 
-        public override void Drive(double distance)
+        public override string Drive(double distance)
         {
             if((distance * this.FuelConsumption) <= FuelQty)
             {
                 this.FuelQty -= distance * this.FuelConsumption;
+                return $"Truck travelled {distance} km";
+
             }
             else
             {
-                throw new ArgumentException("Truck needs refueling");
+                return "Truck needs refueling";
             }
         }
 
-        public override void Refuel(double liters)
+        public override string Refuel(double liters)
         {
             if (liters <= 0)
             {
-                throw new ArgumentException("Fuel must be a positive number");
+                return "Fuel must be a positive number";
             }
             else
-                this.FuelQty += liters * 0.95;
+            {
+                this.FuelQty += liters*0.95;
+                return "";
+            }
+
         }
     }
 }

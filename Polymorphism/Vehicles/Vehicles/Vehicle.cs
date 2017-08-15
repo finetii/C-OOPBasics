@@ -32,9 +32,9 @@ namespace Vehicles
             get { return tankCapacity; }
             set
             {
-                if (value < 0)
+                if (value <= 0)
                 {
-                    throw new ArgumentException("Fuel must be a positive number");
+                    throw new ArgumentException("TankCapacity must be a positive number");
                 }
                 tankCapacity = value; }
         }
@@ -47,20 +47,24 @@ namespace Vehicles
             this.TankCapacity = tankCapacity;
         }
 
-        public abstract void Drive(double distance);
+        public abstract string Drive(double distance);
 
-        public virtual void Refuel(double liters)
+        public virtual string Refuel(double liters)
         {
-            if (liters > this.TankCapacity)
+            if (liters > this.TankCapacity - this.FuelQty)
             {
-                throw new ArgumentException("Cannot fit fuel in tank");
+                return "Cannot fit fuel in tank";
             }
             else if (liters <= 0)
             {
-                throw new ArgumentException("Fuel must be a positive number");
+                return "Fuel must be a positive number";
             }
             else
+            {
                 this.FuelQty += liters;
+                return "";
+            }
+                
         }
     }
 }
