@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="Animal.cs" />
     <Compile Include="Cat.cs" />
-    <Compile Include="Felime.cs" />
+    <Compile Include="Feline.cs" />
     <Compile Include="Food.cs" />
     <Compile Include="Mammal.cs" />
     <Compile Include="Meat.cs" />

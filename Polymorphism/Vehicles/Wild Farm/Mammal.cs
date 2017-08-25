@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace WildFarm
 {
     abstract class Mammal : Animal
@@ -12,15 +11,15 @@ namespace WildFarm
             set { livingRegion = value; }
         }
 
-        public Mammal(string animalName, double animalWeight, string livingRegion)
-            : base(animalName, animalWeight)
+        public Mammal(string animalType,string animalName, double animalWeight, string livingRegion)
+            : base(animalType,animalName, animalWeight)
         {
             this.LivingRegion = livingRegion;
         }
 
         public override string ToString()
         {
-            return $"{this.AnimalType}[{this.AnimalName}, {this.AnimalWeight:f2}, {this.LivingRegion}, {this.FoodEaten}]";
+            return $"{this.AnimalType}[{this.AnimalName}, {this.AnimalWeight}, {this.LivingRegion}, {this.FoodEaten}]";
         }
     }
 }

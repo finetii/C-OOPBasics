@@ -33,19 +33,17 @@ namespace WildFarm
             set { foodEaten = value; }
         }
 
-        public Animal(string animalName, double animalWeight)
+        public Animal(string animalType, string animalName, double animalWeight)
         {
+            this.AnimalType = animalType;
             this.AnimalName = animalName;
             this.AnimalWeight = animalWeight;
         }
 
-        public virtual string MakeSound()
-        {
-            return "Silent";
-        }
+        public abstract string MakeSound();
         public virtual void Eat(Food food)
         {
-            this.foodEaten += food.Quantity;
+            this.FoodEaten = food.Quantity;
         }
     }
 }

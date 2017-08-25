@@ -3,22 +3,22 @@
 
 namespace WildFarm
 {
-    class Tiger : Felime
+    class Tiger : Feline
     {
-        public Tiger(string animalName, double animalWeight, string livingRegion)
-            : base(animalName,animalWeight,livingRegion)
+        public Tiger(string animalType,string animalName, double animalWeight, string livingRegion)
+            : base(animalType, animalName,animalWeight,livingRegion)
         {
         }
 
         public override void Eat(Food food)
         {
-            if (food.Equals("Meat"))
+            if (food is Meat)
             {
-                this.FoodEaten += food.Quantity;
+                this.FoodEaten = food.Quantity;
             }
             else
             {
-                throw new ArgumentException($"Tigers are not eating that type of food");
+                throw new Exception($"Tigers are not eating that type of food!");
             }
         }
 
@@ -28,4 +28,4 @@ namespace WildFarm
         }
     }
 }
-}
+

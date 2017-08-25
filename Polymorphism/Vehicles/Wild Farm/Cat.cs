@@ -1,9 +1,7 @@
-﻿using System;
-
-
+﻿
 namespace WildFarm
 {
-    class Cat : Felime
+    class Cat : Feline
     {
         string breed;
 
@@ -14,8 +12,8 @@ namespace WildFarm
         }
 
 
-        public Cat(string animalName, double animalWeight, string livingRegion, string breed)
-            : base(animalName,animalWeight,livingRegion)
+        public Cat(string animalType,string animalName, double animalWeight, string livingRegion, string breed)
+            : base(animalType,animalName,animalWeight,livingRegion)
         {
             this.Breed = breed;
         }
@@ -23,6 +21,11 @@ namespace WildFarm
         public override string MakeSound()
         {
             return "Meowwww";
+        }
+
+        public override string ToString()
+        {
+            return $"{this.AnimalType}[{this.AnimalName}, {this.Breed}, {this.AnimalWeight}, {this.LivingRegion}, {this.FoodEaten}]";
         }
     }
 }
